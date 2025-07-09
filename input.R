@@ -22,10 +22,10 @@
 #  lat_point:  double; latitude of landeshauptstadt
 
 bundeslaender_coord <- data.frame(
-  bundesland = c("Baden-Wuerttemberg", "Bayern","Berlin",                
-                 "Brandenburg", "Bremen", "Hamburg",               
-                 "Hessen", "Mecklenburg-Vorpommern", "Niedersachsen",         
-                 "Nordrhein-Westfalen", "Rheinland-Pfalz", "Saarland",        
+  bundesland = c("Baden-Wuerttemberg", "Bayern","Berlin",
+                 "Brandenburg", "Bremen", "Hamburg",
+                 "Hessen", "Mecklenburg-Vorpommern", "Niedersachsen",
+                 "Nordrhein-Westfalen", "Rheinland-Pfalz", "Saarland",
                  "Sachsen", "Sachsen-Anhalt", "Schleswig-Holstein",
                  "Thueringen"),
   lon1 = c(7,8.5,12,11,7.5,9,7.5,10.5,6,5,5.5,6,11.5,10,8,9),
@@ -82,7 +82,7 @@ phenology_phases <- data.frame(phase = c("Beginn der Bluete","Blattfall (Herbst)
 #  min_now;        integer; minimum value used in plot of parameter if no data is available
 #  max_now;        integer; maximum value used in plot of parameter if no data is available
 #  pch;            character; symbol with which parameter is represented in plot
-#  type;           character; plot type how to represent parameter in plot, ie 
+#  type;           character; plot type how to represent parameter in plot, ie
 #                             "p" for points, "h" for histogram-like, "s" for stair steps
 #                             (please google for other possible options known
 #                              by R plot())
@@ -92,36 +92,43 @@ meteo_parameters <- data.frame(parameter = c("Temperatur","Niederschlag",
                                              "Taupunkttemperatur","Regendauer",
                                              "Wind(Spitze)","Wind(Mittel)","Schneehöhe",
                                              "Bedeckungsgrad","Dampfdruck","Temperatur(max)",
-                                             "Temperatur(min)"),
+                                             "Temperatur(min)","Chill Temperatur",
+                                             "Globalstrahlung","Sonnenscheindauer"),
                                unit = c("\u00B0C", "mm", "%", "h","hPa",
                                         "\u00B0C","\u00B0C","min",
-                                        "m/s","m/s","cm","Achtel","hPa","\u00B0C","\u00B0C"),
+                                        "m/s","m/s","cm","Achtel","hPa","\u00B0C","\u00B0C",
+                                        "\u00B0C","W/m^2","min"),
                                dwd_name_now = c("TT_10","RWS_10","RF_10","XX","PP_10",
                                                 "TM5_10","TD_10","RWS_DAU_10","XX","XX","XX",
-                                                "XX","XX","XX","XX"),
+                                                "XX","XX","XX","XX","XX","XX","XX"),
                                dwd_name_daily = c("TMK.Lufttemperatur","RSK.Niederschlagshoehe",
                                                   "UPM.Relative_Feuchte","SDK.Sonnenscheindauer",
                                                   "PM.Luftdruck","XX","XX","XX",
                                                   "FX.Windspitze","FM.Windgeschwindigkeit","SHK_TAG.Schneehoehe",
                                                   "NM.Bedeckungsgrad","VPM.Dampfdruck","TXK.Lufttemperatur_Max",
-                                                  "TNK.Lufttemperatur_Min"),
+                                                  "TNK.Lufttemperatur_Min","XX","XX","XX"),
                                dwd_name_monthly = c("MO_TT.Lufttemperatur","MO_RR.Niederschlagshoehe",
                                                     "XX","MO_SD_S.Sonnenscheindauer",
                                                     "XX","XX","XX","XX","MX_FX.Windspitze","XX","XX","MO_N.Bedeckungsgrad",
-                                                    "XX","MX_TX.Lufttemperatur_AbsMax","MX_TN.Lufttemperatur_AbsMin"),
-                               min_now = c(50,0,50,0,2000,50,50,0,500,500,0,0,50,50,50),
-                               max_now = c(-50,1,40,0,500,-50,-50,0,-5,-5,50,9,-50,-50,-50),
+                                                    "XX","MX_TX.Lufttemperatur_AbsMax","MX_TN.Lufttemperatur_AbsMin",
+                                                    "XX","XX","XX"),
+                               mch_name_now = c("tre200s0","rre150z0","ure200s0","XX","prestas0",
+                                                "tre005s0","tde200s0","XX","fkl010z0","fkl010z1","htoauts0",
+                                                "XX","pva200s0","XX","XX","xchills0","gre000z0","sre000z0"),
+                               min_now = c(50,0,50,0,2000,50,50,0,500,500,0,0,50,50,50,50,500,15),
+                               max_now = c(-50,1,40,0,500,-50,-50,0,-5,-5,50,9,-50,-50,-50,-50,0,-5),
                                pch = c("\u2022","\u007C","\u23F9","\u003D","\u25B2","0","\u0298","--",
-                                       "~","\u2248","--","\u0298","\u221E","\u2191","\u2192"),
+                                       "~","\u2248","--","\u0298","\u221E","\u2191","\u2192",
+                                       "\u221E","\u2191","\u2192"),
                                type = c("b","h","p","p","p","b","p","s",
-                                        "p","p","s","p","p","p","p"))
+                                        "p","p","s","p","p","p","p","p","p","p"))
 
 ## individual list of colours used in graphics
 #  phenology plot
 colours_phenology <- c("#FF0000","#0000FF","#00FF00",
              "#8000FF","#00FFFF", "darkorange1",
              "orange", "#FF00F5", "black",
-             "forestgreen","yellow", "brown4", 
+             "forestgreen","yellow", "brown4",
              "mediumorchid4","lavender","aquamarine",
              "beige","chocolate","azure4",
              "azure2", "indianred", "khaki",
