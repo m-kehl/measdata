@@ -62,7 +62,7 @@ messdataUI <- function(id) {
                            value = c(Sys.Date()-60,Sys.Date()-1),
                            step = 1)), #1day
            #copyright DWD
-           f_copyright_DWD(),
+           f_copyright(),
            textOutput("text_output"),
     ),
     #middle/right hand side
