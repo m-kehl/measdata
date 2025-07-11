@@ -5,8 +5,8 @@ f_read_mess_CH <- function(name,mess_meta_CH,granularity){
     data_mess_all <<- NULL
     names_new <- name
   } else{
-    data_mess_all <<- data_mess_all[data_mess_all$name %in% name,]
-    names_old <- unique(data_mess_all$name)
+    data_mess_all <<- data_mess_all[data_mess_all$station_name %in% name,]
+    names_old <- unique(data_mess_all$station_name)
     names_new <- name[!(name %in% names_old)]
   }
 
