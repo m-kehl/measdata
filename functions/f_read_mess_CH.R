@@ -21,12 +21,11 @@ f_read_mess_CH <- function(name,mess_meta_CH,granularity){
   if (granularity == "now"){
     csv_base <- "_t_now"
     granularity_global <<- "now"
+  } else if (granularity == "daily"){
+    csv_base <- "_d_recent"
+    granularity_global <<- "daily"
   }
-  # else if (granularity == "daily"){
-  #   mess_base <- paste0(granularity,"/kl/recent/tageswerte_KL_")
-  #   mess_end <- "_akt"
-  #   granularity_global <<- "daily"
-  # } else if (granularity == "monthly"){
+  #   else if (granularity == "monthly"){
   #   mess_base <- paste0(granularity,"/kl/recent/monatswerte_KL_")
   #   mess_end <- "_akt"
   #   granularity_global <<- "monthly"
@@ -50,6 +49,11 @@ f_read_mess_CH <- function(name,mess_meta_CH,granularity){
 
       mess_data_CH$STATIONS_ID <- mess_meta_CH$station_wigos_id[mess_meta_CH$Stationsname == names_new[ii]]
       mess_data_CH$station_name <- mess_meta_CH$Stationsname[mess_meta_CH$Stationsname == names_new[ii]]
+      if (granularity == "daily"){
+        if (!is.na(mess_data_CH$sre000d0[1])){
+          mess_data_CH$sre000d0 <- mess_data_CH$sre000d0/60 #from minutes to hours
+        }
+      }
 
       data_mess_all <<- rbind(data_mess_all,mess_data_CH)
     }}
