@@ -9,15 +9,21 @@ messdataServer <- function(id,active) {
 
     ## read and process meta and measurement data
     # read meta data
-    mess_meta <- f_read_mess_meta()
+    #observe({
+    mess_meta <- reactive(f_read_mess_meta(input$mess_country))
+    #output$testing <- renderText(input$mess_country)
+    #})
     # update UI based on meta data
+    observe({
     updateSelectizeInput(session,"mess_name",
-                         choices = base::unique(mess_meta$Stationsname),
+                         choices = base::unique(mess_meta()$Stationsname),
                          options = list(maxItems = 5))
-    # read measurement data
-    mess_data <- reactive(f_read_mess_waiter(input$mess_name,mess_meta,sub(paste0(id,"-"),"",input$mess_tabsets),id))
+    })
 
-    output$text_output <- renderText(input$mess_name)
+    # read measurement data
+    mess_data <- reactive(f_read_mess_waiter(input$mess_name,mess_meta(),input$mess_country,sub(paste0(id,"-"),"",input$mess_tabsets),id))
+
+    #output$text_output <- renderText(input$mess_name)
 
     ## show information box
     observeEvent(input$info_mess, {
