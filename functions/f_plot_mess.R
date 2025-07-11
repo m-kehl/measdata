@@ -1,4 +1,4 @@
-f_plot_mess <- function(mess_data,granularity,parameters, title_start, timespan = c(-999,999)){
+f_plot_mess <- function(mess_data,mess_country,granularity,parameters, title_start, timespan = c(-999,999)){
   ## function to plot measurement surface data
   # - mess_data:   data.frame; data for measurement surface data, result of
   #                           f_read_mess.R
@@ -11,23 +11,29 @@ f_plot_mess <- function(mess_data,granularity,parameters, title_start, timespan 
   # - title_start: character; this character is placed at the beginning of the title
   # - timespan:    array with two dates (POSIXct); since and till date between which
   #                          measurement data are plotted; optional, placeholder -999 and 999
-  
+
   ## plot preparations
   # load meta plot data for parameters
   source(paste0(getwd(),"/input.R"),local = TRUE)
-  
+
   #define plot basics
   par(mar = c(5, 5, 4, 6))
   colours <- c("black","red","green","blue","cyan")
   station_ids <- base::unique(mess_data$STATIONS_ID)
   station_names <- base::unique(mess_data$station_name)
-  
+
   #set time to UTC
   Sys.setenv(TZ='GMT')
-  
+
+  if (mess_country == "Schweiz"){
+    country <- "mch"
+  } else{
+    country <- "dwd"
+  }
+
   ## setup for different granularities
-  dwd_name <- paste0("dwd_name_",granularity)
-  
+  dwd_name <- paste0(country,"_name_",granularity)
+
   #check whether chosen parameter exists in chosen granularity
   param_exists <- meteo_parameters$parameter[meteo_parameters[dwd_name][[1]] == "XX"]
   if (length(param_exists) > 0){
@@ -35,7 +41,7 @@ f_plot_mess <- function(mess_data,granularity,parameters, title_start, timespan 
       parameters <- parameters[parameters != param_exists[ii]]
     }
   }
-  
+
   #set labels and spacing for different granularities
   if (granularity == "now"){
     x_label <- "Messzeit (UTC)"
@@ -53,8 +59,8 @@ f_plot_mess <- function(mess_data,granularity,parameters, title_start, timespan 
                              " - ",format(max(mess_data$MESS_DATUM),"%m.%y"))
     date_spacing <- 60*60*24 #1d
   }
-  
-  ##plot  
+
+  ##plot
   # loop to plot measurement data of multiple stations in one plot
   more_plots <- TRUE
   count <- 1
@@ -101,7 +107,7 @@ f_plot_mess <- function(mess_data,granularity,parameters, title_start, timespan 
            ylim = ylim_meteo,
            col = colours[count],
            xlab = x_label,
-           ylab = paste0(meteo_parameters$parameter[meteo_parameters$parameter==parameters[1]]," [", 
+           ylab = paste0(meteo_parameters$parameter[meteo_parameters$parameter==parameters[1]]," [",
                          meteo_parameters$unit[meteo_parameters$parameter==parameters[1]],"]"))
       par(new = TRUE)
       #plot (with right y-axis)
@@ -121,7 +127,7 @@ f_plot_mess <- function(mess_data,granularity,parameters, title_start, timespan 
              array(mess_data_plot[param][[1]]),
              pch = meteo_parameters$pch[meteo_parameters$parameter==parameters[2]],
              type = meteo_parameters$type[meteo_parameters$parameter==parameters[2]],
-             col = colours[count], 
+             col = colours[count],
              xlim = c(min(mess_data$MESS_DATUM, na.rm = T),
                       max(mess_data$MESS_DATUM, na.rm = T)),
              ylim = ylim_meteo,
@@ -132,7 +138,7 @@ f_plot_mess <- function(mess_data,granularity,parameters, title_start, timespan 
         axis(side=4, col = "black", ylim =c(min(mess_data[param],na.rm = T),max(mess_data[param],na.rm = T)))
         axis.POSIXct(side=1, xlim = c(min(mess_data$MESS_DATUM, na.rm = T),
                                       max(mess_data$MESS_DATUM, na.rm = T)))
-        mtext(paste0(meteo_parameters$parameter[meteo_parameters$parameter==parameters[2]]," [", 
+        mtext(paste0(meteo_parameters$parameter[meteo_parameters$parameter==parameters[2]]," [",
                      meteo_parameters$unit[meteo_parameters$parameter==parameters[2]],"]"),
               side = 4, line = 3)
         #set title if two parameters are plotted
@@ -161,7 +167,7 @@ f_plot_mess <- function(mess_data,granularity,parameters, title_start, timespan 
     legend(x="bottomleft",legend = station_names, col = c(1:length(station_names)),
            pch = 16)
   }
-  
+
   ## turn timezone back
   Sys.setenv(TZ="CET")
 }

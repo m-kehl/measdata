@@ -48,8 +48,8 @@ messdataServer <- function(id,active) {
         output$mess_plot_monthly_prec <- renderPlot(f_plot_empty())
       } else if (sub(paste0(id,"-"),"",input$mess_tabsets) == "now"){
         # plot measurement data for recent measurements
-        output$mess_plot <- renderPlot(f_plot_mess(mess_data(),sub(paste0(id,"-"),"",input$mess_tabsets),input$parameter_plot1,"Plot 1: "))
-        output$mess_plot_prec <- renderPlot(f_plot_mess(mess_data(),sub(paste0(id,"-"),"",input$mess_tabsets),input$parameter_plot2,"Plot 2: "))
+        output$mess_plot <- renderPlot(f_plot_mess(mess_data(),input$mess_country,sub(paste0(id,"-"),"",input$mess_tabsets),input$parameter_plot1,"Plot 1: "))
+        output$mess_plot_prec <- renderPlot(f_plot_mess(mess_data(),input$mess_country,sub(paste0(id,"-"),"",input$mess_tabsets),input$parameter_plot2,"Plot 2: "))
         shinyjs::hideElement("box_sincetill")
       } else if (sub(paste0(id,"-"),"",input$mess_tabsets) == "daily"){
         # update UI
