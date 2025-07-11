@@ -32,7 +32,7 @@ f_read_mess_waiter <- function(name, mess_meta,mess_country,granularity,id){
     id = c(NS(id,"mess_plot_monthly"))
   )
   if (mess_country == "Schweiz"){
-    data_mess_all <- f_read_mess_CH(name,mess_meta)
+    data_mess_all <- f_read_mess_CH(name,mess_meta,granularity)
   } else{
     data_mess_all <- f_read_mess(name,mess_meta,granularity)
   }
