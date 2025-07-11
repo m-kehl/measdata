@@ -32,8 +32,8 @@ messdataServer <- function(id,active) {
 
     ## update UI
     observeEvent(sub(paste0(id,"-"),"",input$mess_tabsets),{
-      f_updateselectize_parameters(session,"parameter_plot1",sub(paste0(id,"-"),"",input$mess_tabsets),input$parameter_plot1)
-      f_updateselectize_parameters(session,"parameter_plot2",sub(paste0(id,"-"),"",input$mess_tabsets),input$parameter_plot2)
+      f_updateselectize_parameters(session,"parameter_plot1",sub(paste0(id,"-"),"",input$mess_tabsets),input$parameter_plot1,input$mess_country)
+      f_updateselectize_parameters(session,"parameter_plot2",sub(paste0(id,"-"),"",input$mess_tabsets),input$parameter_plot2,input$mess_country)
     })
 
     ## plot measurement data
