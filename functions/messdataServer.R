@@ -59,8 +59,8 @@ messdataServer <- function(id,active) {
                           timeFormat = "%d.%m.%Y")
         shinyjs::showElement("box_sincetill")
         # plot measurement data for daily measurements
-        output$mess_plot_daily <- renderPlot(f_plot_mess(mess_data(),sub(paste0(id,"-"),"",input$mess_tabsets),input$parameter_plot1,"Plot 1: ",input$sincetill))
-        output$mess_plot_daily_prec <- renderPlot(f_plot_mess(mess_data(),sub(paste0(id,"-"),"",input$mess_tabsets),input$parameter_plot2,"Plot 2: ",input$sincetill))
+        output$mess_plot_daily <- renderPlot(f_plot_mess(mess_data(),input$mess_country,sub(paste0(id,"-"),"",input$mess_tabsets),input$parameter_plot1,"Plot 1: ",input$sincetill))
+        output$mess_plot_daily_prec <- renderPlot(f_plot_mess(mess_data(),input$mess_country,sub(paste0(id,"-"),"",input$mess_tabsets),input$parameter_plot2,"Plot 2: ",input$sincetill))
       } else if (sub(paste0(id,"-"),"",input$mess_tabsets) == "monthly"){
         # plot measurement data for monthly measurements
         output$mess_plot_monthly <- renderPlot(f_plot_mess(mess_data(),sub(paste0(id,"-"),"",input$mess_tabsets),input$parameter_plot1,"Plot 1: "))
