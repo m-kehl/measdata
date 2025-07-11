@@ -1,4 +1,4 @@
-f_read_mess_waiter <- function(name, mess_meta,granularity,id){
+f_read_mess_waiter <- function(name, mess_meta,mess_country,granularity,id){
   ## function to read measurement surface data (like ie temperature, precipitation)
   # - name:        array; names of measurement station/s (characters)
   # - mess_meta:   data.frame; meta data for measurement surface data, result of
@@ -31,8 +31,12 @@ f_read_mess_waiter <- function(name, mess_meta,granularity,id){
     ),
     id = c(NS(id,"mess_plot_monthly"))
   )
+  if (mess_country == "Schweiz"){
+    f_read_mess_CH(name,mess_meta)
+  } else{
+    f_read_mess(name,mess_meta,granularity)
+  }
 
-  f_read_mess(name,mess_meta,granularity)
 
   waiter_hide()
   return(data_mess_all)
