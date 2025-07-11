@@ -6,10 +6,10 @@ messdataUI <- function(id) {
   source(paste0(getwd(),"/input.R"),local = TRUE)
   tagList(
     #left hand side
-    column(3, 
+    column(3,
            br(),
            #info-button
-           column(1,       
+           column(1,
                   actionButton(NS(id,"info_mess"), label = NULL, icon = icon("info"),
                                style="color: black;
                                         background-color: HoneyDew;
@@ -21,12 +21,19 @@ messdataUI <- function(id) {
            br(),
            hr(),
            #measurement data of which measurement station should be plotted
+           selectInput(
+             inputId = NS(id,"mess_country"),
+             label = "Land",
+             choices = c("Deutschland","Schweiz"),
+             selected = c("Schweiz"),
+             multiple = FALSE),
            selectizeInput(
              inputId = NS(id,"mess_name"),
              label = "Stationsname/n (max. 5)",
              choices = c(""),
              multiple = TRUE,
              options = list(maxItems = 5)),
+           textOutput(NS(id,"testing")),
            #which parameter/s should be plotted in first plot
            selectizeInput(
              inputId = NS(id,"parameter_plot1"),
