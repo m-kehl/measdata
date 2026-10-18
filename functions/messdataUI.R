@@ -33,7 +33,6 @@ messdataUI <- function(id) {
              choices = c(""),
              multiple = TRUE,
              options = list(maxItems = 5)),
-           textOutput(NS(id,"testing")),
            #which parameter/s should be plotted in first plot
            selectizeInput(
              inputId = NS(id,"parameter_plot1"),
@@ -57,10 +56,12 @@ messdataUI <- function(id) {
                width = '800px',
                sliderInput(NS(id,"sincetill"),
                            "Zeitspanne für Plot",
-                           min = Sys.Date()-61,
+                           min = Sys.Date()-121,
                            max = Sys.Date(),
-                           value = c(Sys.Date()-60,Sys.Date()-1),
+                           value = c(Sys.Date()-120,Sys.Date()-1),
                            step = 1)), #1day
+
+           textOutput(NS(id,"testing")),
            #copyright DWD
            f_copyright(),
            textOutput("text_output"),

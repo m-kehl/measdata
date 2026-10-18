@@ -24,6 +24,9 @@ f_read_mess_CH <- function(name,mess_meta_CH,granularity){
   } else if (granularity == "daily"){
     csv_base <- "_d_recent"
     granularity_global <<- "daily"
+  } else if (granularity == "monthly"){
+    csv_base <- "_m"
+    granularity_global <<- "monthly"
   }
   #   else if (granularity == "monthly"){
   #   mess_base <- paste0(granularity,"/kl/recent/monatswerte_KL_")
@@ -52,6 +55,11 @@ f_read_mess_CH <- function(name,mess_meta_CH,granularity){
       if (granularity == "daily"){
         if (!is.na(mess_data_CH$sre000d0[1])){
           mess_data_CH$sre000d0 <- mess_data_CH$sre000d0/60 #from minutes to hours
+        }
+      }
+      if (granularity == "monthly"){
+        if (!is.na(mess_data_CH$sre000m0[1])){
+          mess_data_CH$sre000m0 <- mess_data_CH$sre000m0/60 #from minutes to hours
         }
       }
 

@@ -55,6 +55,7 @@ f_plot_mess <- function(mess_data,mess_country,granularity,parameters, title_sta
     date_spacing <- 60 * 60 #1h
   } else if (granularity == "monthly"){
     x_label <- "Messmonat"
+    mess_data <- mess_data[mess_data$MESS_DATUM>=timespan[1] & mess_data$MESS_DATUM<=timespan[2],]
     title_appendix <- paste0(format(min(mess_data$MESS_DATUM),"%m.%y"),
                              " - ",format(max(mess_data$MESS_DATUM),"%m.%y"))
     date_spacing <- 60*60*24 #1d

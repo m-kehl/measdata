@@ -37,11 +37,12 @@ f_infotext <- function(data_kind){
                      ,duration = NULL)
   }else if (data_kind == "mess"){
     showNotification(tags$p("Die Messdaten der Bodenparameter, wie beispielsweise
-                     Temperatur oder Niederschlag, werden f\u00FCr Deutschland vom
-                     Deutschen Wetterdienst durch dessen Bodenmessnetz erfasst und
+                     Temperatur oder Niederschlag, werden von MeteoSwiss (",tags$a("SwissMetNet", href="https://www.meteoschweiz.admin.ch/wetter/messsysteme/bodenstationen/automatisches-messnetz.html", target= "_blank"),") für die Schweiz und vom
+                     Deutschen Wetterdienst f\u00FCr Deutschland (",tags$a("Bodenmessnetz", href="https://www.dwd.de/DE/derdwd/messnetz/bodenbeobachtung/_functions/Teasergroup/bodenmessnetz.html?nn=452720", target= "_blank"),")
+                     erfasst und
                      \u00F6ffentlich zur Verf\u00FCgung gestellt. Die Messstationen laufen
                      nach den internationalen Richtlinien der WMO (World Meteorological
-                     Organization). Weiter Informationen dazu finden Sie ", tags$a("hier.", href="https://www.dwd.de/DE/derdwd/messnetz/bodenbeobachtung/_functions/Teasergroup/bodenmessnetz.html?nn=452720", target= "_blank"),
+                     Organization).",
                             tags$br(),tags$br(),
                             "Auf dieser Website abrufbar sind sowohl die Messwerte des aktuellen Tages
                             (Aufl\u00F6sung 10-Minuten) als auch Tageswerte und Monatswerte. Die abrufbaren Parameter

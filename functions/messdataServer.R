@@ -11,7 +11,6 @@ messdataServer <- function(id,active) {
     # read meta data
     #observe({
     mess_meta <- reactive(f_read_mess_meta(input$mess_country))
-    #output$testing <- renderText(input$mess_country)
     #})
     # update UI based on meta data
     observe({
@@ -34,6 +33,20 @@ messdataServer <- function(id,active) {
     observeEvent(sub(paste0(id,"-"),"",input$mess_tabsets,input$mess_country),{
       f_updateselectize_parameters(session,"parameter_plot1",sub(paste0(id,"-"),"",input$mess_tabsets),input$parameter_plot1,input$mess_country)
       f_updateselectize_parameters(session,"parameter_plot2",sub(paste0(id,"-"),"",input$mess_tabsets),input$parameter_plot2,input$mess_country)
+    })
+
+
+    observeEvent(input$mess_tabsets,{
+      if (sub(paste0(id,"-"),"",input$mess_tabsets) == "daily"){
+        updateSliderInput(session,"sincetill",
+                          value = c(Sys.Date()-120,Sys.Date()-1),
+                          timeFormat = "%d.%m.%Y")
+        output$testing <- renderText(sub(paste0(id,"-"),"",input$mess_tabsets))
+      } else if (sub(paste0(id,"-"),"",input$mess_tabsets) == "monthly"){
+        updateSliderInput(session,"sincetill",
+                          value = c(Sys.Date()-5*365,Sys.Date()-1),
+                          timeFormat = "%m.%Y")
+      }
     })
 
     ## plot measurement data
@@ -62,11 +75,15 @@ messdataServer <- function(id,active) {
         output$mess_plot_daily <- renderPlot(f_plot_mess(mess_data(),input$mess_country,sub(paste0(id,"-"),"",input$mess_tabsets),input$parameter_plot1,"Plot 1: ",input$sincetill))
         output$mess_plot_daily_prec <- renderPlot(f_plot_mess(mess_data(),input$mess_country,sub(paste0(id,"-"),"",input$mess_tabsets),input$parameter_plot2,"Plot 2: ",input$sincetill))
       } else if (sub(paste0(id,"-"),"",input$mess_tabsets) == "monthly"){
+        updateSliderInput(session,"sincetill",
+                          min = mess_data()$MESS_DATUM[1],
+                          max = mess_data()$MESS_DATUM[nrow(mess_data())],
+                          timeFormat = "%m.%Y")
         # plot measurement data for monthly measurements
-        output$mess_plot_monthly <- renderPlot(f_plot_mess(mess_data(),sub(paste0(id,"-"),"",input$mess_tabsets),input$parameter_plot1,"Plot 1: "))
-        output$mess_plot_monthly_prec <- renderPlot(f_plot_mess(mess_data(),sub(paste0(id,"-"),"",input$mess_tabsets),input$parameter_plot2,"Plot 2: "))
+        output$mess_plot_monthly <- renderPlot(f_plot_mess(mess_data(),input$mess_country,sub(paste0(id,"-"),"",input$mess_tabsets),input$parameter_plot1,"Plot 1: ",input$sincetill))
+        output$mess_plot_monthly_prec <- renderPlot(f_plot_mess(mess_data(),input$mess_country,sub(paste0(id,"-"),"",input$mess_tabsets),input$parameter_plot2,"Plot 2: ",input$sincetill))
         # update UI
-        shinyjs::hideElement("box_sincetill")
+        shinyjs::showElement("box_sincetill")
       }
     })
   })
